@@ -1,0 +1,91 @@
+-- CRIAR TABELA FLORES --
+
+CREATE TABLE Flores (
+    codigo_identificacao INTEGER PRIMARY KEY,
+    nome_cientifico TEXT,
+    nome_popular TEXT,
+    preco REAL,
+    quantidade_em_estoque INTEGER,
+    cores_disponiveis TEXT
+);
+
+---------------------------------------------------
+
+-- CRIAR TABELA CLIENTES --
+
+CREATE TABLE Clientes (
+    cpf TEXT PRIMARY KEY,
+    nome TEXT,
+    telefone TEXT,
+    endereco_entrega TEXT
+);
+
+---------------------------------------------------
+
+-- CRIAR TABELA PEDIDOS --
+
+CREATE TABLE Pedidos (
+    numero_pedido INTEGER PRIMARY KEY,
+    data_realizacao DATE,
+    valor_total REAL,
+    cpf_cliente TEXT,
+    data_entrega DATE,
+    horario_entrega TIME,
+    FOREIGN KEY (cpf_cliente) REFERENCES Clientes(cpf)
+);
+
+---------------------------------------------------
+
+-- CRIAR TABELA DETALHES DO PEDIDO --
+
+CREATE TABLE Detalhes_Pedido (
+    id INTEGER PRIMARY KEY,
+    numero_pedido INTEGER,
+    codigo_identificacao_flor INTEGER,
+    quantidade INTEGER,
+    FOREIGN KEY (numero_pedido) REFERENCES Pedidos(numero_pedido),
+    FOREIGN KEY (codigo_identificacao_flor) REFERENCES Flores(codigo_identificacao)
+);
+
+---------------------------------------------------
+
+-- COLOCAR DADOS NA TABELA FLORES --
+
+INSERT INTO Flores (codigo_identificacao, nome_cientifico, nome_popular, preco, quantidade_em_estoque, cores_disponiveis)
+VALUES
+    (1, 'Rosa sp.', 'Rosa Vermelha', 5.99, 50, 'Vermelho, Branco, Rosa'),
+    (2, 'Tulipa sp.', 'Tulipa Amarela', 4.50, 30, 'Amarelo'),
+    (3, 'Orquídea phalaenopsis', 'Orquídea Rosa', 25.00, 20, 'Rosa');
+
+---------------------------------------------------
+
+-- COLOCAR DADOS NA TABELA CLIENTES --
+
+INSERT INTO Clientes (cpf, nome, telefone, endereco_entrega)
+VALUES
+    ('123.456.789-01', 'Ana Silva', '(11) 98765-4321', 'Rua das Flores, 123'),
+    ('234.567.890-12', 'João Oliveira', '(11) 91234-5678', 'Avenida Principal, 456'),
+    ('345.678.901-23', 'Maria Santos', '(11) 93333-4444', 'Praça Central, 789');
+
+---------------------------------------------------
+
+-- COLOCAR DADOS NA TABELA PEDIDOS --
+
+INSERT INTO Pedidos (numero_pedido, data_realizacao, valor_total, cpf_cliente, data_entrega, horario_entrega)
+VALUES
+    (1, '2023-11-01', 50.00, '123.456.789-01', '2023-11-10', '15:00'),
+    (2, '2023-11-02', 30.00, '234.567.890-12', '2023-11-12', '14:30'),
+    (3, '2023-11-03', 75.00, '345.678.901-23', '2023-11-15', '16:00');
+
+---------------------------------------------------
+
+-- COLOCAR DADOS NA TABELA DETALHES DO PEDIDO --
+
+INSERT INTO Detalhes_Pedido (numero_pedido, codigo_identificacao_flor, quantidade)
+VALUES
+    (1, 1, 10),
+    (1, 2, 20),
+    (2, 3, 5),
+    (3, 1, 15),
+    (3, 2, 10),
+    (3, 3, 5);
