@@ -1,0 +1,108 @@
+-- CRIAR TABELA PLATAFORMA --
+
+CREATE TABLE "tb_plataforma" (
+	"cod_plataforma" INTEGER,
+	"nome" TEXT NOT NULL,
+	"fabricante" TEXT NOT NULL,
+	PRIMARY KEY("cod_plataforma" AUTOINCREMENT)
+);
+
+-------------------------------------------------------------------------------------------
+
+-- CRIAR TABELA JOGO --
+
+CREATE TABLE "tb_jogo" (
+	"cod_jogo" INTEGER,
+	"titulo" TEXT NOT NULL,
+	"genero" TEXT NOT NULL,
+	"lancamento" TEXT NOT NULL,
+	"cod_plataforma" INTEGER,
+	PRIMARY KEY("cod_jogo" AUTOINCREMENT)
+	FOREIGN KEY ("cod_plataforma") REFERENCES tb_plataforma ("cod_plataforma")
+);
+
+--------------------------------------------------------------------------------------------
+
+-- COLOCAR DADOS NA TABELA PLATAFORMA --
+
+INSERT INTO tb_plataforma (nome, fabricante)
+VALUES
+    ('Xbox One', 'Microsoft'),
+    ('Xbox 360', 'Microsoft'),
+    ('Xbox Series X', 'Microsoft'),
+    ('PlayStation 2', 'Sony'),
+    ('PlayStation 3', 'Sony'),
+    ('PlayStation 4', 'Sony'),
+    ('PlayStation 5', 'Sony'),
+    ('Nintendo Switch', 'Nintendo'),
+    ('Nintendo wil', 'Nintendo'),
+    ('Wil U', 'Nintendo');
+
+-----------------------------------------------------------------------------------------------
+
+-- COLOCAR DADOS NA TABELA JOGO --
+
+INSERT INTO tb_jogo (titulo, genero, lancamento, cod_plataforma)
+VALUES
+            ('GTA','Ação',2001-01-17,1),
+	('MarioBross','Ação',2002-01-17,2),
+	('Sonic','Ação',2003-01-17,3),
+	('FiveNight Atfreddys','Ação',2004-01-17,4),
+	('Minecraft','Ação',2005-01-17,5),
+	('OMG','RPG',2006-01-17,6),
+	('Barbie','RPG',2007-01-17,7),
+	('HongKong','RPG',2008-01-17,8),
+	('TrisTruue','Aventura',2009-01-17,9),
+	('Dreams','Aventura',2010-01-17,10);
+
+-------------------------------------------------------------------------------------------------
+
+-- CONSULTAR DADOS --
+
+	SELECT *FROM tb_jogo WHERE titulo = "GTA";
+
+	SELECT *FROM tb_jogo WHERE genero = "ação";
+
+-------------------------------------------------------------------------------------------------
+
+-- CONSULTAR DADOS NO INNER JOIN --
+
+SELECT
+	tb_plataforma.nome,
+	tb_plataforma.fabricante,
+	tb_jogo.titulo,
+	tb_jogo.genero,
+	tb_jogo.lancamento
+FROM
+	tb_jogo
+INNER JOIN
+	tb_plataforma ON tb_plataforma.cod_plataforma = tb_jogo.cod_plataforma;
+
+--------------------------------------------------------------------------------------------------
+
+-- ALTERAR DADOS --
+
+UPDATE tb_jogo
+	SET lancamento = '2001-01-17'
+	WHERE cod_jogo = 1;
+
+UPDATE tb_jogo
+	SET lancamento = '2002-02-11'
+	WHERE cod_jogo = 2;
+
+UPDATE tb_jogo
+	SET lancamento = '2003-03-29'
+	WHERE cod_jogo = 3;
+
+UPDATE tb_jogo
+	SET lancamento = '2004-04-18'
+	WHERE cod_jogo = 4;
+
+------------------------------------------------------------------------------------------------------
+
+-- DELETAR DADOS --
+ 
+	DELETE FROM tb_jogo WHERE titulo = 'GTA';
+	DELETE FROM tb_jogo WHERE titulo = 'Sonic';
+	DELETE FROM tb_jogo WHERE titulo = 'MarioBross';
+	DELETE FROM tb_jogo WHERE titulo = 'Minecraft';
