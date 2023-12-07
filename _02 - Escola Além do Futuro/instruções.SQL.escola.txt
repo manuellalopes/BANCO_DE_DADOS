@@ -1,0 +1,112 @@
+-- CRIAR TABELA ALUNOS --
+
+CREATE TABLE Alunos (
+    cpf TEXT PRIMARY KEY,
+    nome TEXT,
+    rg TEXT,
+    data_nascimento DATE,
+    endereco TEXT
+);
+
+-----------------------------------------
+
+-- CRIAR TABELA CURSOS --
+
+CREATE TABLE Cursos (
+    codigo_identificacao INTEGER PRIMARY KEY,
+    nome TEXT,
+    carga_horaria INTEGER
+);
+
+-----------------------------------------
+
+-- CRIAR TABELA PROFESSORES --
+
+CREATE TABLE Professores (
+    numero_registro INTEGER PRIMARY KEY,
+    nome TEXT,
+    especialidade TEXT,
+    contato TEXT
+);
+
+-----------------------------------------
+
+-- CRIAR TABELA MATRICULAS --
+
+CREATE TABLE Matriculas (
+    numero_matricula INTEGER PRIMARY KEY,
+    cpf_aluno TEXT,
+    codigo_curso INTEGER,
+    FOREIGN KEY (cpf_aluno) REFERENCES Alunos(cpf),
+    FOREIGN KEY (codigo_curso) REFERENCES Cursos(codigo_identificacao)
+);
+
+-----------------------------------------
+
+-- CRIAR TABELA NOTAS --
+
+CREATE TABLE Notas (
+    numero_matricula INTEGER,
+    codigo_curso INTEGER,
+    n1 REAL,
+    n2 REAL,
+    n3 REAL,
+    n4 REAL,
+    PRIMARY KEY (numero_matricula, codigo_curso),
+    FOREIGN KEY (numero_matricula) REFERENCES Matriculas(numero_matricula),
+    FOREIGN KEY (codigo_curso) REFERENCES Cursos(codigo_identificacao)
+);
+
+-----------------------------------------
+
+
+-- COLOCAR DADOS NA TABELA ALUNOS --
+
+INSERT INTO Alunos (cpf, nome, rg, data_nascimento, endereco)
+VALUES
+    ('12345678901', 'João Silva', '987654321', '2000-05-15', 'Rua das Flores, 123'),
+    ('23456789012', 'Maria Oliveira', '123456789', '1999-09-20', 'Avenida Principal, 456'),
+    ('34567890123', 'Pedro Santos', '456789012', '2001-03-10', 'Praça Central, 789');
+
+-----------------------------------------
+
+-- COLOCAR DADOS NA TABELA CURSOS --
+
+INSERT INTO Cursos (codigo_identificacao, nome, carga_horaria)
+VALUES
+    (1, 'Informática', 80),
+    (2, 'Inglês', 60),
+    (3, 'Administração', 100);
+
+
+-----------------------------------------
+
+-- COLOCAR DADOS NA TABELA PROFESSORES --
+
+INSERT INTO Professores (numero_registro, nome, especialidade, contato)
+VALUES
+    (101, 'Prof. Oliveira', 'Informática', 'prof.oliveira@email.com'),
+    (102, 'Prof. Silva', 'Inglês', 'prof.silva@email.com'),
+    (103, 'Prof. Souza', 'Administração', 'prof.souza@email.com');
+
+
+-----------------------------------------
+
+-- COLOCAR DADOS NA TABELA MATRICULAS --
+
+INSERT INTO Matriculas (numero_matricula, cpf_aluno, codigo_curso)
+VALUES
+    (1, '12345678901', 1),
+    (2, '23456789012', 2),
+    (3, '34567890123', 3);
+
+
+-----------------------------------------
+
+-- COLOCAR DADOS NA TABELA NOTAS --
+
+INSERT INTO Notas (numero_matricula, codigo_curso, n1, n2, n3, n4)
+VALUES
+    (1, 1, 8.5, 7.5, 9.0, 8.0),
+    (2, 2, 9.0, 8.5, 7.0, 9.5),
+    (3, 3, 7.5, 9.0, 8.0, 7.0);
