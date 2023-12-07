@@ -1,0 +1,178 @@
+-- CRIAR TABELA CLIENTE --
+
+CREATE TABLE "tb_cliente"(
+	"cliente_id" INTEGER,
+	"nome" TEXT NOT NULL,
+	"cnh" TEXT NOT NULL,
+	"telefone" TEXT NOT NULL,
+	PRIMARY KEY ("cliente_id" AUTOINCREMENT)
+);
+
+-----------------------------------------------------------
+
+-- CRIAR TABELA VEICULO --
+
+CREATE TABLE "tb_veiculo"(
+	"veiculo_id" INTEGER,
+	"modelo" TEXT NOT NULL,
+	"ano" TEXT NOT NULL,
+	"placa" TEXT NOT NULL,
+	"disponibilidade" TEXT NOT NULL,
+	PRIMARY KEY ("veiculo_id" AUTOINCREMENT)
+);
+
+-----------------------------------------------------------
+
+-- CRIAR TABELA ALUGUEL --
+
+CREATE TABLE "tb_aluguel"(
+	"aluguel_id" INTEGER NOT NULL,
+	"cliente_id" INTEGER NOT NULL,
+	"veiculo_id" INTEGER NOT NULL,
+	"data_inicio" TEXT NOT NULL,
+	"data_fim" TEXT NOT NULL,
+	PRIMARY KEY ("aluguel_id" AUTOINCREMENT)
+	FOREIGN KEY ("cliente_id") REFERENCES tb_cliente ("cliente_id")
+	FOREIGN KEY ("veiculo_id") REFERENCES tb_veiculo ("veiculo_id")
+);
+
+-----------------------------------------------------------------------------
+
+
+-- COLOCAR DADOS NA TABELA CLIENTE --
+
+INSERT INTO "tb_cliente" (nome, cnh, telefone) 
+VALUES
+	("Hadassa", "1234567801", "99999-9911"),
+	("Ravi", "1234567802", "99999-9922"),
+	("Diana", "1234567803", "99999-9933"),
+	("Thales", "1234567804", "99999-9944"),
+	("Rafaella", "1234567805", "99999-9955"),
+	("Lucas", "1234567806", "99999-9966"),
+	("Mariana", "1234567807", "99999-9977"),
+	("Gustavo", "1234567808", "99999-9988"),
+	("Manuella", "1234567809", "99999-9999"),
+	("Kaio", "1234567800", "99999-9900");
+
+-----------------------------------------------------------
+
+-- COLOCAR DADOS NA TABELA VEICULO --
+
+INSERT INTO "tb_veiculo" (modelo, ano, placa, disponibilidade) 
+VALUES
+	("Chevrolet Onix", "2000", "AAA1B22", "Disponivel"),
+	("Renault Stepway", "2001", "BBB2C22", "Alugado"),
+	("Volkswagen Polo Track", "2002", "CCC3D33", "Alugado"),
+	("Fiat Cronos", "2003", "DDD4E44", "Disponivel"),
+	("Hyundai HB20 Sense", "2004", "EEE5F55", "Disponivel"),
+	("Fiat Argo", "2005", "FFF6G66", "Alugado"),
+	("Peugeot 208 Like", "2006", "GGG7H77", "Alugado"),
+	("Citroën C3 Live", "2007", "HHH8I88", "Alugado"),
+	("Fiat Mobi Like", "2008", "III9J99", "Disponivel"),
+	("Renault Kwid Zen", "2009", "JJJ0K00", "Disponivel");
+
+-----------------------------------------------------------
+
+-- COLOCAR DADOS NA TABELA ALUGUEL --
+
+INSERT INTO "tb_aluguel" (cliente_id, veiculo_id, data_inicio, data_fim) 
+VALUES
+	(1, 2, "2023-01-01", "2023-01-06"),
+	(2, 3, "2023-01-09", "2023-01-11"),
+	(3, 4, "2023-01-13", "2023-01-18"),
+	(4, 5, "2023-01-18", "2023-01-20"),
+	(5, 6, "2023-01-24", "2023-01-29"),
+	(6, 7, "2023-01-30", "2023-02-03"),
+	(7, 8, "2023-02-04", "2023-02-08"),
+	(8, 9, "2023-02-09", "2023-02-13"),
+	(9, 10, "2023-02-16", "2023-02-26"),
+	(10, 1, "2023-02-18", "2023-02-24"),
+	(3, 7, "2023-03-01", "2023-03-06"),
+	(6, 2, "2023-03-09", "2023-03-11"),
+	(9, 5,"2023-03-13", "2023-03-18"),
+	(2, 8, "2023-03-18", "2023-03-20"),
+	(7, 1, "2023-04-24", "2023-04-29"),
+	(1, 9, "2023-04-30", "2023-04-03"),
+	(4, 6, "2023-05-04", "2023-05-08"),
+	(8, 3, "2023-05-09", "2023-05-13"),
+	(5, 10, "2023-05-16", "2023-05-26"),
+	(10, 4, "2023-05-18", "2023-05-24");
+
+
+-----------------------------------------------------------------------------
+
+-- CONSULTAR DADOS --
+
+	SELECT *FROM tb_cliente WHERE nome = "Hadassa";
+
+	SELECT *FROM tb_cliente WHERE cnh = "1234567804";
+
+	SELECT *FROM tb_cliente WHERE telefone = "99999-9999";
+
+
+
+	SELECT *FROM tb_veiculo WHERE modelo = "Chevrolet Onix";
+
+	SELECT *FROM tb_veiculo WHERE ano = "2006";
+
+	SELECT *FROM tb_veiculo WHERE placa = "EEE5F55";
+
+
+
+	SELECT *FROM tb_aluguel WHERE cliente_id = "5";
+
+	SELECT *FROM tb_aluguel WHERE veiculo_id = "2";
+
+	SELECT *FROM tb_aluguel WHERE data_inicio = "2023-01-09";
+
+	SELECT *FROM tb_aluguel WHERE data_fim = "2023-02-13";
+
+
+
+------------------------------------------------------------------------------
+
+-- CONSULTAR DADOS NO INNER JOIN --
+
+SELECT
+	tb_cliente.nome,
+	tb_cliente.cnh,
+	tb_cliente.telefone,
+	tb_veiculo.modelo,
+	tb_veiculo.ano,
+	tb_veiculo.placa
+FROM
+	tb_veiculo
+INNER JOIN
+	tb_cliente ON tb_cliente.cliente_id = tb_veiculo.veiculo_id;
+
+--------------------------------------------------------------------------------
+
+-- ALTERAR DADOS --
+
+UPDATE tb_veiculo
+	SET ano = '2001'
+	WHERE veiculo_id = 1;
+
+
+UPDATE tb_veiculo
+	SET ano = '2009'
+	WHERE veiculo_id = 2;
+
+
+UPDATE tb_veiculo
+	SET ano = '2005'
+	WHERE veiculo_id = 3;
+
+
+UPDATE tb_veiculo
+	SET ano = '2007'
+	WHERE veiculo_id = 4;
+
+------------------------------------------------------------------------------------
+
+-- DELETAR DADOS --
+ 
+	DELETE FROM tb_aluguel WHERE data_fim = '2023-05-24';
+	DELETE FROM tb_aluguel WHERE data_fim = '2023-05-26';
+	DELETE FROM tb_aluguel WHERE data_fim = '2023-05-13';
+	DELETE FROM tb_aluguel WHERE data_fim = '2023-05-08';
