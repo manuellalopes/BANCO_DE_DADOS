@@ -1,0 +1,76 @@
+-- CRIAR TABELA PNEUS --
+
+CREATE TABLE Pneus (
+numero_serie INTEGER PRIMARY KEY,
+marca TEXT,
+modelo TEXT,
+dimensoes TEXT,
+quantidade_estoque INTEGER
+);
+
+-- CRIAR TABELA CLIENTES --
+
+CREATE TABLE Clientes (
+cpf TEXT PRIMARY KEY,
+nome TEXT,
+telefone TEXT,
+endereco TEXT
+);
+
+-- CRIAR TABELA SERVICOS --
+
+CREATE TABLE Servicos (
+numero_ordem_servico INTEGER PRIMARY KEY,
+cliente_cpf TEXT,
+data_realizacao DATE,
+valor DECIMAL,
+FOREIGN KEY (cliente_cpf) REFERENCES Clientes(cpf)
+);
+
+-- CRIAR TABELA SERVICOS_PNEUS --
+
+CREATE TABLE Servicos_Pneus (
+numero_ordem_servico INTEGER,
+numero_serie_pneu INTEGER,
+PRIMARY KEY (numero_ordem_servico, numero_serie_pneu),
+FOREIGN KEY (numero_ordem_servico) REFERENCES Servicos(numero_ordem_servico),
+FOREIGN KEY (numero_serie_pneu) REFERENCES Pneus(numero_serie)
+);
+
+-- INSERIR DADOS NA TABELA PNEUS --
+
+INSERT INTO Pneus (numero_serie, marca, modelo, dimensoes, quantidade_estoque)
+VALUES
+(1, 'Michelin', 'Pilot Sport 4', '225/45R17', 20),
+(2, 'Goodyear', 'Eagle F1 Asymmetric', '235/55R18', 15),
+(3, 'Bridgestone', 'Potenza S001', '205/60R16', 25);
+
+-- INSERIR DADOS NA TABELA CLIENTES --
+
+INSERT INTO Clientes (cpf, nome, telefone, endereco)
+VALUES
+('123.456.789-01', 'José Silva', '(11) 98765-4321', 'Rua das Árvores, 456'),
+('987.654.321-09', 'Ana Oliveira', '(11) 91234-5678', 'Avenida Principal, 789'),
+('111.222.333-44', 'Carlos Santos', '(11) 93333-4444', 'Praça Central, 123');
+
+-- INSERIR DADOS NA TABELA SERVICOS --
+
+INSERT INTO Servicos (numero_ordem_servico, cliente_cpf, data_realizacao, valor)
+VALUES
+(1, '123.456.789-01', '2023-11-01', 150.00),
+(2, '987.654.321-09', '2023-11-02', 200.00),
+(3, '111.222.333-44', '2023-11-03', 100.00);
+
+-- INSERIR DADOS NA TABELA SERVICOS_PNEUS --
+
+INSERT INTO Servicos_Pneus (numero_ordem_servico, numero_serie_pneu)
+VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(3, 1),
+(3, 3);
+
+
+
+
